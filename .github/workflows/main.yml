@@ -8,69 +8,67 @@ on:
     branches:
       - main  # Optional: Trigger workflow on pull requests to main
 
+permissions:
+  contents: write  # Permission to write to repository
+  actions: write   # Permission to trigger actions
+  workflows: write # Permission to dispatch other workflows
+
 jobs:
   terraform:
     name: Terraform Plan and Apply
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Check out the repository
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Step 2: Set up Terraform
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.5.7
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.7
 
-    # Step 3: Initialize Terraform
-    - name: Terraform Init
-      run: terraform init
+      - name: Terraform Init
+        run: terraform init
 
-    # Step 4: Terraform Plan
-    - name: Terraform Plan
-      id: plan
-      run: terraform plan -out=tfplan.binary
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        TF_VAR_oauth_token: ${{ secrets.OAUTH_TOKEN }}
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -out=tfplan.binary
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TF_VAR_oauth_token: ${{ secrets.OAUTH_TOKEN }}
 
-    # Step 5: Upload Plan for Approval
-    - name: Upload Plan
-      uses: actions/upload-artifact@v3
-      with:
-        name: tfplan.binary
-        path: tfplan.binary
+      - name: Upload Plan
+        uses: actions/upload-artifact@v3
+        with:
+          name: tfplan.binary
+          path: tfplan.binary
 
-    # Step 6: Wait for Manual Approval
-    - name: Request Approval
-      uses: peter-evans/repository-dispatch@v2
-      with:
-        event-type: terraform-apply-approval
-        client-payload: '{"plan_url": "${{ steps.plan.outputs.plan-file-url }}"}'
+      - name: Request Approval
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          event-type: terraform-apply-approval
+          client-payload: '{"plan_url": "${{ steps.plan.outputs.plan-file-url }}"}'
+          token: ${{ secrets.OAUTH_TOKEN }}  # Use the Personal Access Token stored in GitHub Secrets
+          repository: Bhavana0918/POMP-IAC-TERRAFORM
 
   terraform-apply:
     name: Terraform Apply
     runs-on: ubuntu-latest
-    needs: [terraform]
+    needs: terraform
     if: ${{ github.event.client_payload.event_type == 'terraform-apply-approval' }}
 
     steps:
-    # Step 1: Check out the repository
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Step 2: Set up Terraform
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.5.7
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.7
 
-    # Step 3: Apply Terraform Plan
-    - name: Terraform Apply
-      run: terraform apply tfplan.binary
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Terraform Apply
+        run: terraform apply tfplan.binary
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
