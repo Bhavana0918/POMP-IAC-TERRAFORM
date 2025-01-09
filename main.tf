@@ -4,14 +4,14 @@ provider "aws" {
 }
 
 module "s3_backend" {
-  source = "./modules/s3_backend"
+  source = "git::https://github.com/Bhavana0918/POMP-IAC-TERRAFORM//modules/s3_backend"
   bucket_name         = var.bucket_name
   dynamodb_table_name = var.dynamodb_table_name
   aws_region          = var.aws_region
 }
 
 module "aws_amplify_app" {
-  source    = "./modules/amplify"
+  source    = "git::https://github.com/Bhavana0918/POMP-IAC-TERRAFORM//modules/amplify"
   app_name  =var.app_name
   github_repository=var.github_repository
   oauth_token=var.oauth_token 
@@ -19,7 +19,7 @@ module "aws_amplify_app" {
 
 
 module "lambda" {
-  source               = "./modules/lambda"
+  source               = "git::https://github.com/Bhavana0918/POMP-IAC-TERRAFORM//modules/lambda"
   aws_region           = var.aws_region
   lambda_function_name = var.lambda_function_name
   lambda_handler       = var.lambda_handler
@@ -40,7 +40,7 @@ module "lambda" {
 
 
 module "api_gateway" {
-  source = "./modules/api_gateway"
+  source = "git::https://github.com/Bhavana0918/POMP-IAC-TERRAFORM//modules/api_gateway"
   
   api_name           =var.api_name
   lambda_function_arn = module.lambda.lambda_function_arn
@@ -51,7 +51,7 @@ module "api_gateway" {
 
 
 module "dynamodb_table" {
-  source        = "./modules/dynamodb_table"
+  source        = "git::https://github.com/Bhavana0918/POMP-IAC-TERRAFORM//modules/dynamodb_table"
   table_name    = var.table_name
   hash_key      = var.hash_key
   hash_key_type = var.hash_key_type  
