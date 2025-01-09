@@ -8,6 +8,11 @@ on:
         required: true
         default: 'no'
         type: string
+      destroy_plan:
+        description: 'Would you like to terraform destroy? (yes/no)'
+        required: true
+        default: 'no'
+        type: string
 
 permissions:
   contents: write  # Allows GitHub Actions to push changes to the repository
@@ -73,3 +78,33 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  terraform-destroy:
+    name: Terraform Destroy
+    runs-on: ubuntu-latest
+    needs: terraform-plan
+    if: ${{ github.event.inputs.apply_plan == 'no' && github.event.inputs.destroy_plan == 'yes' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.7
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TF_VAR_oauth_token: ${{ secrets.OAUTH_TOKEN }}
+
+
+      
+
+          
