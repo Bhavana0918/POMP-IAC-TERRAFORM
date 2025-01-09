@@ -41,7 +41,7 @@ jobs:
       - name: Upload Plan
         uses: actions/upload-artifact@v3
         with:
-          name: tfplan.binary
+          name: tfplan
           path: tfplan.binary
 
   terraform-apply:
@@ -58,6 +58,12 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.5.7
+
+      - name: Download Plan Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: tfplan
+          path: ./  # Specify the directory where the plan file will be saved
 
       - name: Terraform Apply
         run: terraform apply tfplan.binary
