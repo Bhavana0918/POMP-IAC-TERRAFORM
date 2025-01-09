@@ -59,6 +59,9 @@ jobs:
         with:
           terraform_version: 1.5.7
 
+      - name: Terraform Init (again)
+        run: terraform init  # Re-run terraform init to ensure dependencies are up-to-date
+
       - name: Download Plan Artifact
         uses: actions/download-artifact@v3
         with:
