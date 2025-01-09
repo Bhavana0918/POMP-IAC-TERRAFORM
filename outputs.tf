@@ -14,35 +14,6 @@ output "table_name" {
 }
 
 
-
-
-
-# output "app_name" {
-#   value =module.amplify.app_name
-# }
-
-# output "hosting_bucket" {
-#   value = module.amplify.hosting_bucket
-# }
-
-
-
-# output "s3_bucket_name" {
-#   value = module.amplify.s3_bucket_name
-# }
-
-# output "amplify_app_id" {
-#   value = module.amplify.amplify_app_id
-# }
-
-# output "amplify_branch_name" {
-#   value = module.amplify.amplify_branch_name
-# }
-
-# output "s3_index_url" {
-#   value = module.amplify.s3_index_url
-# }
-
 output "amplify_app_url" {
   value = module.aws_amplify_app.amplify_app_url
 }
