@@ -13,16 +13,10 @@ variable "dynamodb_table_name" {
   type        = string
 }
 
-
-
-
 variable "app_name" {
   description = "The name of the Amplify app."
   type        = string
 }
-
-
-
 
 variable "oauth_token" {
   description = "OAuth token for accessing GitHub repositories"
@@ -31,10 +25,8 @@ variable "oauth_token" {
 }
 
 variable "github_repository" {
-  type = string 
+  type = string
 }
-
-
 
 variable "lambda_function_name" {
   description = "The name of the Lambda function"
@@ -45,13 +37,6 @@ variable "source_file" {
   description = "The directory containing the Lambda function code"
   type        = string
 }
-
-# variable "environment_variables" {
-#   description = "Environment variables for the Lambda function"
-#   type        = map(string)
-#   default     = {}
-# }
-
 
 variable "api_name" {
   description = "Name of the API Gateway"
@@ -67,27 +52,6 @@ variable "api_stage" {
   description = "Stage name for API Gateway"
   default     = "prod"
 }
-
-
-
-
-
-# variable "hosting_bucket" {
-#   type        = string
-# }
-# variable "access_token" {
-#   type = string
-  
-# }
-
-
-# variable "hosting_bucket" {
-#   type        = string
-# }
-# variable "index_file_path" {
-#   type        = string
-# }
-
 
 variable "table_name" {
   description = "The name of the DynamoDB table"

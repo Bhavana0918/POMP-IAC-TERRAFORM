@@ -1,5 +1,5 @@
 resource "aws_api_gateway_rest_api" "my_api" {
-  name        = var.api_name
+  name = var.api_name
 }
 
 
@@ -31,10 +31,10 @@ resource "aws_api_gateway_integration" "post_integration" {
 
 
 resource "aws_api_gateway_integration" "cors_integration" {
-  rest_api_id             = aws_api_gateway_rest_api.my_api.id
-  resource_id             = aws_api_gateway_rest_api.my_api.root_resource_id
-  http_method             = aws_api_gateway_method.cors_method.http_method
-  type                    = "MOCK"
+  rest_api_id = aws_api_gateway_rest_api.my_api.id
+  resource_id = aws_api_gateway_rest_api.my_api.root_resource_id
+  http_method = aws_api_gateway_method.cors_method.http_method
+  type        = "MOCK"
   request_templates = {
     "application/json" = "{\"statusCode\": 200}"
   }

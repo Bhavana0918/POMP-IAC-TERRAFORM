@@ -9,7 +9,7 @@ resource "aws_dynamodb_table" "this" {
     type = var.hash_key_type
   }
 
- 
+
   dynamic "attribute" {
     for_each = var.sort_key != null ? [var.sort_key] : []
     content {
@@ -18,7 +18,7 @@ resource "aws_dynamodb_table" "this" {
     }
   }
 
-  
+
   read_capacity  = var.billing_mode == "PROVISIONED" ? var.read_capacity : null
   write_capacity = var.billing_mode == "PROVISIONED" ? var.write_capacity : null
 

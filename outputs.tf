@@ -9,8 +9,8 @@ output "dynamodb_table_name" {
 }
 
 output "table_name" {
-  value=module.dynamodb_table.table_name
-  
+  value = module.dynamodb_table.table_name
+
 }
 
 

@@ -43,9 +43,9 @@ resource "aws_iam_role_policy" "lambda_dynamodb_policy" {
 
 
 data "archive_file" "lambda" {
-  type         = "zip"
-  source_file  = var.source_file
-  output_path  = "lambda_function_payload.zip"
+  type        = "zip"
+  source_file = var.source_file
+  output_path = "lambda_function_payload.zip"
 }
 
 
