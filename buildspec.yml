@@ -2,9 +2,14 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      terraform: 1.5.7
+
     commands:
       - echo "Installing Terraform"
       - terraform --version
+      - echo "Retrieving GitHub OAuth token..."
+      - export GITHUB_TOKEN=$(aws secretsmanager get-secret-value --secret-id github-oauth-token --query SecretString --output text | jq -r .github_oauth_token)
 
   pre_build:
     commands:
@@ -14,7 +19,7 @@ phases:
   build:
     commands:
       - echo "Planning Terraform changes"
-      - terraform plan -out=tfplan.binary
+      - terraform plan -out=tfplan.binary -var="oauth_token=$GITHUB_TOKEN"
       - terraform show -json tfplan.binary > tfplan.json
 
   post_build:
