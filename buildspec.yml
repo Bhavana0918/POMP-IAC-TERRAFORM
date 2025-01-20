@@ -4,14 +4,18 @@ phases:
   install:
     runtime-versions:
       terraform: 1.5.7
-
     commands:
       - echo "Installing Terraform"
       - terraform --version
       - echo "Retrieving GitHub OAuth token from Secrets Manager..."
-      - export GITHUB_TOKEN=$(aws secretsmanager get-secret-value --secret-id github-oauth-token --query SecretString --output text | jq -r '.github_oauth_token')
-      - if [ -z "$GITHUB_TOKEN" ]; then echo "Error: GitHub token is empty"; exit 1; fi
-      - echo "GitHub token retrieved successfully"
+      - |
+        GITHUB_TOKEN=$(aws secretsmanager get-secret-value --secret-id github-oauth-token --query SecretString --output text | jq -r '.github_oauth_token')
+        if [ -z "$GITHUB_TOKEN" ]; then 
+          echo "Error: GitHub token is empty"
+          exit 1
+        fi
+        echo "GitHub token retrieved successfully"
+        export GITHUB_TOKEN
 
   pre_build:
     commands:
@@ -21,7 +25,7 @@ phases:
   build:
     commands:
       - echo "Planning Terraform changes"
-      - terraform plan -out=tfplan.binary -var="oauth_token=$GITHUB_TOKEN"
+      - terraform plan -out=tfplan.binary -var="oauth_token=${GITHUB_TOKEN}"
       - terraform show -json tfplan.binary > tfplan.json
 
   post_build:
