@@ -10,10 +10,10 @@ phases:
         if command -v yum > /dev/null 2>&1; then
           yum install -y jq aws-cli
         elif command -v apt-get > /dev/null 2>&1; then
-          sudo apt-get update
-          sudo apt-get install -y jq awscli
+          apt-get update
+          apt-get install -y jq awscli
         elif command -v apk > /dev/null 2>&1; then
-          sudo apk add --no-cache jq aws-cli
+          apk add --no-cache jq aws-cli
         else
           echo "Package manager not supported"
           exit 1
