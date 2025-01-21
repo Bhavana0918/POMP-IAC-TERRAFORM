@@ -1,5 +1,5 @@
 aws_region          = "us-east-1"
-bucket_name         = "powerofmath-project-state-file"
+bucket_name         = "powerofmath-project-state"
 dynamodb_table_name = "powerofmath-project-terraform-lock-table"
 
 
