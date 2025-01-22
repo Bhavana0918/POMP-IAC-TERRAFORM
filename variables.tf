@@ -122,3 +122,8 @@ variable "lambda_iam_role_name" {
   type        = string
   default     = "iam_for_lambda"
 }
+
+variable "API_GATEWAY_URL" {
+  type = string
+  
+}

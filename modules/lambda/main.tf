@@ -57,4 +57,10 @@ resource "aws_lambda_function" "test_lambda" {
   source_code_hash = data.archive_file.lambda.output_base64sha256
   runtime          = var.lambda_runtime
 
+    environment {
+    variables = {
+      API_GATEWAY_URL = var.API_GATEWAY_URL
+    }
+  }
+
 }
