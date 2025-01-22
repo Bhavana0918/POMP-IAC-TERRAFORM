@@ -36,10 +36,10 @@ variable "lambda_iam_role_name" {
   default     = "iam_for_lambda"
 }
 
-variable "API_GATEWAY_URL" {
-  type = string
+# variable "API_GATEWAY_URL" {
+#   type = string
   
-}
+# }
 
 # variable "environment_variables" {
 #   description = "Environment variables for the Lambda function"

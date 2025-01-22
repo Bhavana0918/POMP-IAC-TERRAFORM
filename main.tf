@@ -27,8 +27,6 @@ module "lambda" {
   source_file          = var.source_file
   table_name           = var.table_name
   lambda_iam_role_name = var.lambda_iam_role_name
-  API_GATEWAY_URL      = module.aws_api_gateway_deployment.api_deployment.invoke_url
-    
 
   depends_on = [module.dynamodb_table]
 }
