@@ -42,6 +42,13 @@ module "api_gateway" {
 }
 
 
+module "ssm_api_gateway" {
+  source = "./modules/ssm_parameter"
+  api_gateway_url = module.api_gateway.api_gateway_url
+  depends_on  =[module.api_gateway]
+}
+
+
 
 module "dynamodb_table" {
   source        = "git::https://github.com/Bhavana0918/POMP-IAC-TERRAFORM//modules/dynamodb_table"
