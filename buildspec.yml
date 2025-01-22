@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  variables:
+    API_GATEWAY_URL: "https://pnrcwo0qki.execute-api.us-east-1.amazonaws.com/dev/math"
+
 phases:
   install:
     runtime-versions:
