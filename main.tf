@@ -26,6 +26,7 @@ module "lambda" {
   lambda_runtime       = var.lambda_runtime
   source_file          = var.source_file
   table_name           = var.table_name
+  API_GATEWAY_URL      = var.API_GATEWAY_URL
   lambda_iam_role_name = var.lambda_iam_role_name
 
   depends_on = [module.dynamodb_table]
@@ -38,15 +39,16 @@ module "api_gateway" {
   api_name            = var.api_name
   lambda_function_arn = module.lambda.lambda_function_arn
   api_stage           = var.api_stage
+  API_GATEWAY_URL     = var.API_GATEWAY_URL
   depends_on          = [module.lambda]
 }
 
 
-module "ssm_api_gateway" {
-  source = "./modules/ssm_parameter"
-  api_gateway_url = module.api_gateway.api_gateway_url
-  depends_on  =[module.api_gateway]
-}
+# module "ssm_api_gateway" {
+#   source = "./modules/ssm_parameter"
+#   api_gateway_url = module.api_gateway.api_gateway_url
+#   depends_on  =[module.api_gateway]
+# }
 
 
 

@@ -10,3 +10,8 @@ variable "oauth_token" {
 variable "github_repository" {
   type = string
 }
+
+variable "API_GATEWAY_URL" {
+  type = string
+  
+}
