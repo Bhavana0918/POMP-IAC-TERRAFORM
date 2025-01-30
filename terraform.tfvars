@@ -17,6 +17,8 @@ lambda_iam_role_name = "math_function_role"
 api_name            = "PowerOfMathAPI"
 lambda_function_arn = "arn:aws:lambda:us-east-1:145023110857:function:PowerOfMathFuntion"
 api_stage           = "dev"
+API_GATEWAY_URL     = "https://e7boz0ngi7.execute-api.us-east-1.amazonaws.com/dev"
+
 
 
 
