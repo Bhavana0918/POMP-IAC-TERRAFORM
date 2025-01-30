@@ -4,11 +4,11 @@ resource "aws_amplify_app" "web_app" {
   oauth_token = var.oauth_token
 
   environment_variables = {
-    ENV = "dev"
-    API_GATEWAY_URL   = var. API_GATEWAY_URL
+    ENV             = "dev"
+    API_GATEWAY_URL = var.API_GATEWAY_URL
   }
-  
-   build_spec = <<-EOT
+
+  build_spec = <<-EOT
   version: 1
   frontend:
     phases:
@@ -45,8 +45,8 @@ resource "aws_amplify_branch" "dev_branch" {
   branch_name = "dev"
 
   environment_variables = {
-    NODE_ENV = "development"
-    API_GATEWAY_URL   = var. API_GATEWAY_URL
+    NODE_ENV        = "development"
+    API_GATEWAY_URL = var.API_GATEWAY_URL
   }
   enable_auto_build = true
 }

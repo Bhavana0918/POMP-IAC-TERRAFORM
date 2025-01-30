@@ -15,6 +15,7 @@ module "aws_amplify_app" {
   app_name          = var.app_name
   github_repository = var.github_repository
   oauth_token       = var.oauth_token
+  API_GATEWAY_URL   = var.API_GATEWAY_URL
 }
 
 
@@ -39,7 +40,6 @@ module "api_gateway" {
   api_name            = var.api_name
   lambda_function_arn = module.lambda.lambda_function_arn
   api_stage           = var.api_stage
-  API_GATEWAY_URL     = var.API_GATEWAY_URL
   depends_on          = [module.lambda]
 }
 

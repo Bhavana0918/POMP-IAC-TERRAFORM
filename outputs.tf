@@ -25,5 +25,5 @@ output "lambda_function_arn" {
 
 output "ssm_api_gateway_value" {
   sensitive = true
-  value = module.ssm_api_gateway.ssm_api_gateway_url
+  value     = module.ssm_api_gateway.ssm_api_gateway_url
 }

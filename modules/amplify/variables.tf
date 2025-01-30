@@ -13,5 +13,5 @@ variable "github_repository" {
 
 variable "API_GATEWAY_URL" {
   type = string
-  
+
 }

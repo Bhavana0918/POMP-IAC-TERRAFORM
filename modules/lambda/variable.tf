@@ -38,7 +38,7 @@ variable "lambda_iam_role_name" {
 
 variable "API_GATEWAY_URL" {
   type = string
-  
+
 }
 
 # variable "environment_variables" {
